@@ -1,0 +1,1 @@
+exports.func = txt => console.log(txt)

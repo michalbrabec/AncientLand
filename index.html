@@ -13,6 +13,10 @@
                 display: block;
             }
 
+            .option:active {
+                background-color: pink;
+            }
+
             .tooltip {
                 position: absolute;
                 background-color: lightgray;
@@ -46,7 +50,7 @@
                 z-index: -1;
             }
 
-            .option:hover .menu {
+            .openmenu {
                 visibility: visible; /* shows menu */
                 top: 30px;
             }
@@ -86,9 +90,10 @@
                     Tooltip
                 </div>
             </div>
-            <div class="option" style="flex: 1; background: red; height: 100%; display: flex; flex-direction: column; justify-content: center;">
-                <div>MENU</div>
-                <div class="menu">
+            <div class="option" style="flex: 1; background-color: red; height: 100%; display: flex; flex-direction: column; justify-content: center;"
+            onclick="document.getElementById('menu').classList.toggle('openmenu')">
+                MENU
+                <div class="menu" id="menu">
                     <button class="item" onclick="alert('Option1')">Option1</button>
                     <button class="item" onclick="alert('Option2')">Option2</button>
                     <button class="item" onclick="alert('Option3')">Option3</button>
@@ -127,8 +132,9 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             column-gap: 10px;
+            row-gap: 10px;
             position: static; /* default value */
-        ;">
+        ;" id="main">
             <div style="background-color: lightblue;position: static;">
                 test
                 <p>TEST</p>
@@ -152,5 +158,26 @@
                 test
             </div>
         </main>
+        <script>
+            func()
+            async function func() {
+                const {origin} = URL.parse(document.URL)
+                const response = await fetch(`${origin}/data.json`)
+                if (response.ok) {
+                    const json = await response.json()
+                    console.log(json)
+                    for (let key in json) {
+                        document.getElementById('main').innerHTML += `
+                            <div style="background-color: pink;">
+                                ${key} - ${json[key]}
+                            </div>
+                        `
+                    }
+                }
+                else {
+                    console.log(`AJAX error ${response.status}`)
+                }
+            }
+        </script>
     </body>
 </html>
